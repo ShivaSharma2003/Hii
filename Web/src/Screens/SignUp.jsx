@@ -1,8 +1,26 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router";
+import { registerAction } from "../Redux/Actions/authAction";
 
 export default function SignUp() {
   const navigate = useNavigate();
+  const [userName, setuserName] = useState("");
+  const [fullName, setfullName] = useState("");
+  const [password, setpassword] = useState("");
+  const [email, setemail] = useState("");
+  const [confirmPassword, setconfirmPassword] = useState("");
+
+  const registerUser = (e) => {
+    e.preventDefault();
+    registerAction(email, userName, password, fullName);
+    console.log("register button clicked");
+    setuserName("");
+    setfullName("");
+    setpassword("");
+    setemail("");
+    setconfirmPassword("");
+  };
+
   return (
     <>
       <section className="h-[100vh] w-[100vw] bg-white flex justify-center items-center">
@@ -15,6 +33,8 @@ export default function SignUp() {
               name="userName"
               className="outline-none px-4 py-2 border-2 border-gray-400 shadow-lg rounded-lg "
               placeholder="username"
+              value={userName}
+              onChange={(e) => setuserName(e.target.value)}
             />
           </div>
           <div className="flex flex-col w-full px-4 py-2 ">
@@ -24,6 +44,8 @@ export default function SignUp() {
               name="fullName"
               className="outline-none px-4 py-2 border-2 border-gray-400 shadow-lg rounded-lg "
               placeholder="Full Name"
+              value={fullName}
+              onChange={(e) => setfullName(e.target.value)}
             />
           </div>
           <div className="flex flex-col w-full px-4 py-2 ">
@@ -33,6 +55,8 @@ export default function SignUp() {
               name="email"
               className="outline-none px-4 py-2 border-2 border-gray-400 shadow-lg rounded-lg "
               placeholder="Email"
+              value={email}
+              onChange={(e) => setemail(e.target.value)}
             />
           </div>
           <div className="flex flex-col w-full px-4 py-2 ">
@@ -42,6 +66,8 @@ export default function SignUp() {
               name="password"
               className="outline-none px-4 py-2 border-2 border-gray-400 shadow-lg rounded-lg "
               placeholder="password"
+              value={password}
+              onChange={(e) => setpassword(e.target.value)}
             />
           </div>
           <div className="flex flex-col w-full px-4 py-2 ">
@@ -51,10 +77,23 @@ export default function SignUp() {
               name="confirmPassword"
               className="outline-none px-4 py-2 border-2 border-gray-400 shadow-lg rounded-lg "
               placeholder="Confirm Password"
+              value={confirmPassword}
+              onChange={(e) => setconfirmPassword(e.target.value)}
             />
           </div>
           <div className="flex flex-col px-4 py-2 ">
-            <button className="px-4 py-2 border-2 border-green-950 rounded-lg font-bold text-white bg-green-600 ">
+            <button
+              className="px-4 py-2 border-2 border-green-950 rounded-lg font-bold text-white bg-green-600 "
+              onClick={(e) => registerUser(e)}
+              disabled={
+                userName === "" ||
+                fullName === "" ||
+                password === "" ||
+                email === "" ||
+                confirmPassword === "" ||
+                confirmPassword !== password
+              }
+            >
               Register Account
             </button>
           </div>

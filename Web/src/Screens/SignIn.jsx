@@ -1,8 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router";
+import { loginAction } from "../Redux/Actions/authAction";
 
 export default function SignIn() {
   const navigate = useNavigate();
+
+  const [password, setpassword] = useState("");
+  const [email, setemail] = useState("");
+
+  const loginUser = (e) => {
+    e.preventDefault();
+    loginAction(email, password);
+    setemail("");
+    setpassword("");
+  };
   return (
     <>
       <section className="h-[100vh] w-[100vw] bg-white flex justify-center items-center">
@@ -15,6 +26,8 @@ export default function SignIn() {
               name="email"
               className="outline-none px-4 py-2 border-2 border-gray-400 shadow-lg rounded-lg "
               placeholder="Email"
+              value={email}
+              onChange={(e) => setemail(e.target.value)}
             />
           </div>
           <div className="flex flex-col w-full px-4 py-2 ">
@@ -24,10 +37,16 @@ export default function SignIn() {
               name="password"
               className="outline-none px-4 py-2 border-2 border-gray-400 shadow-lg rounded-lg "
               placeholder="password"
+              value={password}
+              onChange={(e) => setpassword(e.target.value)}
             />
           </div>
           <div className="flex flex-col px-4 py-2 ">
-            <button className="px-4 py-2 border-2 border-green-950 rounded-lg font-bold text-white bg-green-600 ">
+            <button
+              className="px-4 py-2 border-2 border-green-950 rounded-lg font-bold text-white bg-green-600 "
+              onClick={(e) => loginUser(e)}
+              disabled={email === "" || password === ""}
+            >
               Login Account
             </button>
           </div>
